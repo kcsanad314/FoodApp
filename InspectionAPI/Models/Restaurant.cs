@@ -22,6 +22,8 @@ namespace InspectionAPI.Models
         [MaxLength(1000, ErrorMessage = "A(z) {0} maximum {1} karakter lehet.")]
         [Display(Name = "Étterem neve", AutoGenerateFilter = false, AutoGenerateField = false, Order = 0)]
         public string Description { get; set; }
+        public User? User { get; set; }
         public int UserId { get; set; }
+        public List<Food>? Foods { get; set; }
     }
 }

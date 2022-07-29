@@ -55,5 +55,7 @@ namespace InspectionAPI.Models
         [Display(Name = "Ajtószám", AutoGenerateFilter = false, AutoGenerateField = false, Order = 0)]
         public string DoorNumber { get; set; }
         public UserType Type { get; set; }
+
+        public Restaurant? Restaurant { get; set; }
     }
 }

@@ -1,0 +1,49 @@
+<h1>Register new restaurant</h1>
+<form>
+    <div class="mb-3">
+        <label for="rname" class="form-label">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="rname" name="rname">
+    </div>
+    <div class="mb-3">
+        <label for="rcity" class="form-label">City</label>
+        <input type="text" class="form-control" [(ngModel)]="rcity" name="rcity">
+    </div>
+    <div class="mb-3">
+        <label for="rstreet" class="form-label">Street</label>
+        <input type="text" class="form-control" [(ngModel)]="rstreet" name="rstreet">
+    </div>
+    <div class="mb-3">
+        <label for="rhousenumber" class="form-label">Housenumber</label>
+        <input type="text" class="form-control" [(ngModel)]="rhousenumber" name="rhousenumber">
+    </div>
+    <div class="mb-3">
+        <label for="rdescription" class="form-label">Description</label>
+        <input type="text" class="form-control" [(ngModel)]="rdescription" name="rdescription">
+    </div>
+    <button (click)="addRestaurant()" class="btn btn-primary">
+        Add
+    </button>
+</form>
+
+<h1>Add new food</h1>
+<form>
+    <div class="mb-3">
+        <label for="fname" class="form-label">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="fname" name="fname">
+    </div>
+    <div class="mb-3">
+        <label for="fprice" class="form-label">Price</label>
+        <input type="text" class="form-control" [(ngModel)]="fprice" name="fprice">
+    </div>
+    <div class="mb-3">
+        <label for="fpreparationTime" class="form-label">Preparation Time</label>
+        <input type="text" class="form-control" [(ngModel)]="fpreparationTime" name="fpreparationTime">
+    </div>
+    <div class="mb-3">
+        <label for="fallergenes" class="form-label">Allergenes</label>
+        <input type="text" class="form-control" [(ngModel)]="fallergenes" name="fallergenes">
+    </div>
+    <button (click)="addFood()" class="btn btn-primary">
+        Add
+    </button>
+</form>
