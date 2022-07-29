@@ -1,83 +1,87 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using InspectionAPI.Data;
+using InspectionAPI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InspectionAPI.Controllers
 {
-    public class RestaurantController : Controller
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class RestaurantController : ControllerBase
     {
-        // GET: RestaurantController
-        public ActionResult Index()
+        private readonly DataContext _db;
+        public RestaurantController(DataContext db)
         {
-            return View();
+            _db = db;
         }
 
-        // GET: RestaurantController/Details/5
-        public ActionResult Details(int id)
+        //Restaurant/GetAllRestaurants
+        [HttpGet]
+        public IActionResult GetAllRestaurants()
         {
-            return View();
+            //returns with a list of all the restaurants
+            var result = _db.Restaurants.ToList();
+            return Ok(result);
         }
 
-        // GET: RestaurantController/Create
-        public ActionResult Create()
+        //Restaurant/GetRestaurantById
+        [HttpGet]
+        [Route("{restaurantId}")]
+        public IActionResult GetRestaurantById(int restaurantId)
         {
-            return View();
+            //returns with a list of all the restaurants
+            var result = _db.Restaurants.Where(r => r.Id == restaurantId).FirstOrDefault();
+            return Ok(result);
         }
 
-        // POST: RestaurantController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult RegisterRestaurant([FromBody] Restaurant restaurant)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            //TODO: check if User has Owner or Admin UserType
+            //TODO: check if restaurant already exists
+            _db.Restaurants.Add(restaurant);
+            _db.SaveChanges();
+            return Ok();
         }
 
-        // GET: RestaurantController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: RestaurantController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult AddFood(Food food)
         {
-            try
+            /*var restaurant = _db.Restaurants.Where(r => r.Id == food.RestaurantId).FirstOrDefault();
+            Food _food = new Food()
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                Name = food.Name,
+                Price = food.Price,
+                PreparationTime = food.PreparationTime,
+                Allergenes = food.Allergenes,
+                DiscountMultiplier = food.DiscountMultiplier
+            };
+            restaurant.Foods = new List<Food>();
+            restaurant.Foods.Add(_food);*/
+            _db.Foods.Add(food);
+            _db.SaveChanges();
+            return Ok();
         }
 
-        // GET: RestaurantController/Delete/5
-        public ActionResult Delete(int id)
+        //Restaurant/GetAllFoods
+        [HttpGet]
+        public IActionResult GetAllFoods()
         {
-            return View();
+            //returns with a list of all the restaurants
+            var result = _db.Foods.ToList();
+            return Ok(result);
         }
 
-        // POST: RestaurantController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Restaurant restaurant)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteInspection(Restaurant restaurant)
+        {
+            return NoContent();
         }
     }
 }

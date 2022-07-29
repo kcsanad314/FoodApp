@@ -11,6 +11,8 @@ import { AddEditInspectionComponent } from './inspection/add-edit-inspection/add
 import { InspectionApiService } from './services/inspection-api.service';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { RestaurantsComponent } from './components/restaurants/restaurants.component';
+import { ManageRestaurantComponent } from './components/manage-restaurant/manage-restaurant.component';
+import { RestaurantDetailsComponent } from './components/restaurant-details/restaurant-details.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { RestaurantsComponent } from './components/restaurants/restaurants.compo
     ShowInspectionComponent,
     AddEditInspectionComponent,
     MainPageComponent,
-    RestaurantsComponent
+    RestaurantsComponent,
+    ManageRestaurantComponent,
+    RestaurantDetailsComponent
   ],
   imports: [
     BrowserModule,

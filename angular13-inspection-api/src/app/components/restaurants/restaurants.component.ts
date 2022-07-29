@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { InspectionApiService } from 'src/app/services/inspection-api.service';
+import { RestaurantApiService } from 'src/app/services/restaurant-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-restaurants',
@@ -10,18 +12,12 @@ import { InspectionApiService } from 'src/app/services/inspection-api.service';
 export class RestaurantsComponent implements OnInit {
 
   
-  inspectionList$!:Observable<any[]>;
-  inspectionTypesList$!:Observable<any[]>;
-  inspectionTypesList:any=[];
+  restaurantList$!:Observable<any[]>;
 
-  // Map to display data associate with foreign keys
-  inspectionTypesMap:Map<number, string> = new Map()
-
-  constructor(private service:InspectionApiService) { }
+  constructor(private service:RestaurantApiService) { }
 
   ngOnInit(): void {
-    this.inspectionList$ = this.service.getInspectionList();
-    this.inspectionTypesList$ = this.service.getInspectionTypesList();
+    this.restaurantList$ = this.service.getRestaurantList();
   }
 
 }
