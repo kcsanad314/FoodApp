@@ -1,5 +1,6 @@
 ﻿using InspectionAPI.Data;
 using InspectionAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace InspectionAPI.Controllers
 
         //Restaurant/GetAllRestaurants
         [HttpGet]
+        [Authorize]
         public IActionResult GetAllRestaurants()
         {
             //returns with a list of all the restaurants
@@ -26,6 +28,7 @@ namespace InspectionAPI.Controllers
 
         //Restaurant/GetRestaurantById
         [HttpGet]
+        [Authorize]
         [Route("{restaurantId}")]
         public IActionResult GetRestaurantById(int restaurantId)
         {
