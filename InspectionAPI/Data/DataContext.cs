@@ -1,11 +1,12 @@
 ﻿using InspectionAPI.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace InspectionAPI.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User>
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+        public DataContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Inspection> Inspections { get; set; }
 
@@ -15,12 +16,13 @@ namespace InspectionAPI.Data
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Food> Foods { get; set; }
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<UserRegistrationDto>()
                 .HasOne(u => u.Restaurant)
                 .WithOne(r => r.User)
                 .HasForeignKey<Restaurant>(r => r.UserId);

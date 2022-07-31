@@ -1,4 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
+import { ErrorHandlerService } from './services/error-handler.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,6 +14,9 @@ import { MainPageComponent } from './components/main-page/main-page.component';
 import { RestaurantsComponent } from './components/restaurants/restaurants.component';
 import { ManageRestaurantComponent } from './components/manage-restaurant/manage-restaurant.component';
 import { RestaurantDetailsComponent } from './components/restaurant-details/restaurant-details.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -23,14 +27,17 @@ import { RestaurantDetailsComponent } from './components/restaurant-details/rest
     MainPageComponent,
     RestaurantsComponent,
     ManageRestaurantComponent,
-    RestaurantDetailsComponent
+    RestaurantDetailsComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    CollapseModule.forRoot()
   ],
   providers: [InspectionApiService],
   bootstrap: [AppComponent]
