@@ -21,8 +21,8 @@ export class AppComponent {
     this.authService.authChanged
     .subscribe(res => {
       this.isUserAuthenticated = res;
-      console.log(this.isUserAuthenticated);
       this.isLogged();
+      console.log(this.isLogged());
     })
     
   }
@@ -30,6 +30,7 @@ export class AppComponent {
   public logout = () => {
     this.authService.logout();
     this.router.navigate(["/"]);
+    this.isLogged();
   }
 
   getObject(item: string | null) {
@@ -53,12 +54,14 @@ export class AppComponent {
 
   isLogged() {
 		const token = this.getToken();
-
-		if (token !== null && token !== false) {
+    console.log(token);
+		if (token !== null && token !== false && token !== undefined) {
       this.isUserAuthenticated = true;
 			return true;
 		}
+    //this.isUserAuthenticated = false;
 		return false;
+    
 	}
 
 }

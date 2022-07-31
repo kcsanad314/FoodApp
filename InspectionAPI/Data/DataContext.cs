@@ -21,8 +21,9 @@ namespace InspectionAPI.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
-            modelBuilder.Entity<UserRegistrationDto>()
+            modelBuilder.Entity<User>()
                 .HasOne(u => u.Restaurant)
                 .WithOne(r => r.User)
                 .HasForeignKey<Restaurant>(r => r.UserId);

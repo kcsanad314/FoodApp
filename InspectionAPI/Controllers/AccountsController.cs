@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using InspectionAPI.JwtFeatures;
 using System.IdentityModel.Tokens.Jwt;
+using InspectionAPI.Data;
+using Newtonsoft.Json;
 
 namespace InspectionAPI.Controllers
 {
@@ -15,12 +17,14 @@ namespace InspectionAPI.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
+        private readonly DataContext _db;
 
-        public AccountsController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler)
+        public AccountsController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler, DataContext db)
         {
             _userManager = userManager;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
+            _db = db;
         }
 
         [HttpPost("Registration")]
@@ -38,6 +42,8 @@ namespace InspectionAPI.Controllers
 
                 return BadRequest(new RegistrationResponseDto { Errors = errors });
             }
+            //var userRole = JsonConvert.DeserializeObject(userRegistration.UserRole);
+            await _userManager.AddToRoleAsync(user, user.UserRole.ToString());
 
             return StatusCode(201);
         }
@@ -53,6 +59,15 @@ namespace InspectionAPI.Controllers
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
             return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
+        }
+
+        //Accounts/GetUserRole
+        [HttpGet]
+        public IActionResult GetUserRole(string email)
+        {
+            //returns with a list of all the restaurants
+            var result = _userManager.FindByNameAsync(email);
+            return Ok(result);
         }
     }
 }

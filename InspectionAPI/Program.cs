@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Text;
 
 var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -34,6 +36,14 @@ builder.Services.AddAuthentication(opt =>
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.Configure<JsonSerializerSettings>(options =>
+{
+    options.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+    options.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+    options.TypeNameHandling = TypeNameHandling.Objects;
+    options.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+    options.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

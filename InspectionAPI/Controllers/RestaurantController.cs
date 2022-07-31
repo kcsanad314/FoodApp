@@ -18,7 +18,6 @@ namespace InspectionAPI.Controllers
 
         //Restaurant/GetAllRestaurants
         [HttpGet]
-        [Authorize]
         public IActionResult GetAllRestaurants()
         {
             //returns with a list of all the restaurants
@@ -28,7 +27,6 @@ namespace InspectionAPI.Controllers
 
         //Restaurant/GetRestaurantById
         [HttpGet]
-        [Authorize]
         [Route("{restaurantId}")]
         public IActionResult GetRestaurantById(int restaurantId)
         {
@@ -38,6 +36,7 @@ namespace InspectionAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult RegisterRestaurant([FromBody] Restaurant restaurant)
         {
             //TODO: check if User has Owner or Admin UserType
@@ -48,6 +47,7 @@ namespace InspectionAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult AddFood(Food food)
         {
             /*var restaurant = _db.Restaurants.Where(r => r.Id == food.RestaurantId).FirstOrDefault();

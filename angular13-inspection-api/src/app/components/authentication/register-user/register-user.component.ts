@@ -25,7 +25,8 @@ export class RegisterUserComponent implements OnInit {
       lastName: new FormControl(''),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
-      confirm: new FormControl('')
+      confirm: new FormControl(''),
+      userRole: new FormControl('')
     });
     this.registerForm.get('confirm')!.setValidators([Validators.required, 
     this.passConfValidator.validateConfirmPassword(this.registerForm.get('password')!)]);
@@ -48,7 +49,8 @@ export class RegisterUserComponent implements OnInit {
       lastName: formValues.lastName,
       email: formValues.email,
       password: formValues.password,
-      confirmPassword: formValues.confirm
+      confirmPassword: formValues.confirm,
+      userRole: formValues.userRole
     };
 
     this.authService.registerUser("api/accounts/registration", user)
