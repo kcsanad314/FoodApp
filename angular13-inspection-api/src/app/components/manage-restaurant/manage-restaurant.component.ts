@@ -58,7 +58,7 @@ export class ManageRestaurantComponent implements OnInit {
       street:this.rstreet,
       housenumber:this.rhousenumber,
       description:this.rdescription,
-      userId:1 //make it dynamic
+      userId:this.userId //make it dynamic
     }
     this.service.addRestaurant(restaurant).subscribe();
   }
@@ -70,7 +70,7 @@ export class ManageRestaurantComponent implements OnInit {
       preparationTime:this.fpreparationTime,
       allergenes:this.fallergenes,
       discountMultiplier:this.fdiscountMultiplier,
-      restaurantId:17 //make it dynamic
+      //restaurantId:this.reaurantId //make it dynamic
     }
     this.service.addFood(food).subscribe();
   }

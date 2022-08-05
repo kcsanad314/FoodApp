@@ -274,3 +274,5 @@ C:\Users\kcsan\source\repos\InspectionAPIApp\InspectionAPI\bin\Debug\net6.0\Micr
 C:\Users\kcsan\source\repos\InspectionAPIApp\InspectionAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\kcsan\source\repos\InspectionAPIApp\InspectionAPI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\kcsan\source\repos\InspectionAPIApp\InspectionAPI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\kcsan\source\repos\InspectionAPIApp\InspectionAPI\bin\Debug\net6.0\Microsoft.Owin.dll
+C:\Users\kcsan\source\repos\InspectionAPIApp\InspectionAPI\bin\Debug\net6.0\Owin.dll

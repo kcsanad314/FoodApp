@@ -36,7 +36,7 @@ namespace InspectionAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        //[Authorize(Roles = "Owner")]
         public IActionResult RegisterRestaurant([FromBody] Restaurant restaurant)
         {
             //TODO: check if User has Owner or Admin UserType
