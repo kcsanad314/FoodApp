@@ -48,6 +48,12 @@
             <em *ngIf="hasError('confirm', 'mustMatch')">Passwords must match</em>
           </div>
         </div>
+        <div class="mb-3 row">
+          <label for="userRole" class="col-form-label col-sm-2">User Role:</label>
+          <div class="col-md-5">
+            <input type="text" id="userRole" formControlName="userRole" class="form-control" />
+          </div>
+        </div>
         <br>
         <div class="mb-3 row">
           <div class="col-md-1">

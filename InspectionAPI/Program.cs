@@ -5,7 +5,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.Json.Serialization;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Owin.Security;
+using InspectionAPI.Services;
 
 var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -33,13 +37,28 @@ builder.Services.AddAuthentication(opt =>
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+
+/*builder.Services.Configure<JsonSerializerSettings>(options =>
+{
+    options.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+    options.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+    options.TypeNameHandling = TypeNameHandling.Objects;
+    options.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+    options.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+});*/
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<JwtHandler>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddServices();
+//builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
 builder.Services.AddDbContext <DataContext>(options =>
 {
@@ -55,6 +74,8 @@ builder.Services.AddIdentity<User, IdentityRole>(opt =>
     opt.User.RequireUniqueEmail = true;
 })
     .AddEntityFrameworkStores<DataContext>();
+
+//builder.Services.AddAuthentication
 
 // Enable CORS
 builder.Services.AddCors(options =>

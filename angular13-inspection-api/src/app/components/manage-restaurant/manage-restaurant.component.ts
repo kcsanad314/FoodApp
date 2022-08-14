@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { RestaurantApiService } from 'src/app/services/restaurant-api.service';
 
 @Component({
@@ -11,9 +12,10 @@ export class ManageRestaurantComponent implements OnInit {
 
   restaurantList$!: Observable<any[]>;
   foodList$!: Observable<any[]>;
-
-  constructor(private service:RestaurantApiService) { }
   
+
+  constructor(private service:RestaurantApiService, private authService: AuthenticationService) { }
+
   @Input() restaurant:any;
   rid: number = 0;
   rname: string = "";
@@ -21,7 +23,7 @@ export class ManageRestaurantComponent implements OnInit {
   rstreet: string = "";
   rhousenumber: string = "";
   rdescription: string = "";
-  userId: number = 1;
+  userId: string|null = localStorage.getItem("userId");
 
   @Input() food:any;
   fid: number = 0;
@@ -30,10 +32,11 @@ export class ManageRestaurantComponent implements OnInit {
   fpreparationTime: number = 0;
   fallergenes: string = "";
   fdiscountMultiplier: number = 1;
+  restid: string= "";
 
 
   ngOnInit(): void {
-    this.rid = this.restaurant.rid;
+    this.restid = this.restaurant.rid;
     this.rname = this.restaurant.rname;
     this.rcity = this.restaurant.rcity;
     this.rstreet = this.restaurant.rstreet;
@@ -58,7 +61,7 @@ export class ManageRestaurantComponent implements OnInit {
       street:this.rstreet,
       housenumber:this.rhousenumber,
       description:this.rdescription,
-      userId:1 //make it dynamic
+      userId:this.userId //make it dynamic
     }
     this.service.addRestaurant(restaurant).subscribe();
   }
@@ -70,8 +73,13 @@ export class ManageRestaurantComponent implements OnInit {
       preparationTime:this.fpreparationTime,
       allergenes:this.fallergenes,
       discountMultiplier:this.fdiscountMultiplier,
-      restaurantId:17 //make it dynamic
+      restaurantId: this.restid //make it dynamic
     }
-    this.service.addFood(food).subscribe();
+    this.service.getRestaurantByUserId(localStorage.getItem("userId")).subscribe(data =>{
+      console.log(data.id);
+      food.restaurantId = data.id;
+      this.service.addFood(food).subscribe();
+    });
   }
+
 }

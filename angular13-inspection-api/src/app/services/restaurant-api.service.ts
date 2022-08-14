@@ -18,6 +18,10 @@ export class RestaurantApiService {
     return this.http.get<any>(this.APIUrl + `/Restaurant/GetRestaurantById/${restaurantId}`);
   }
 
+  getRestaurantByUserId(userId:null|string) {
+    var res = this.http.get<any>(this.APIUrl + `/Restaurant/GetRestaurantByUserId/${userId}`);
+    return res;
+  }
 
   addRestaurant(data:any) {
     return this.http.post(this.APIUrl + '/Restaurant/RegisterRestaurant', data);

@@ -4,6 +4,7 @@ using InspectionAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InspectionAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220731193041_reset")]
+    partial class reset
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,9 +281,6 @@ namespace InspectionAPI.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int?>("UserRole")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -324,22 +323,22 @@ namespace InspectionAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fe33f7af-b2fa-430e-a844-638fc4609cf1",
-                            ConcurrencyStamp = "a8c7b722-92e1-4604-a10b-f614125e7b59",
+                            Id = "f21eb12f-a9e7-4766-9047-a4c0796fe74a",
+                            ConcurrencyStamp = "39d517e3-398d-4dc1-86a0-ab5934f74d56",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "ea2b7e6f-d9d7-4bfe-9273-9dccbd093ecf",
-                            ConcurrencyStamp = "b4677981-2078-49cd-b8cc-98da8111b8fc",
+                            Id = "2f872bdb-44f8-4c32-a41e-ae2eab398200",
+                            ConcurrencyStamp = "c891937a-b6aa-469c-a1aa-c62a83ff998d",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "4e78a901-15c8-46cc-b3e1-46a944ceea59",
-                            ConcurrencyStamp = "9c26b712-b28f-455d-a0f6-2c64bf7c4b6f",
+                            Id = "bfb711ef-35f6-4881-8214-cf34c74cd900",
+                            ConcurrencyStamp = "70687282-2bad-401d-9027-ae5b6f0185e6",
                             Name = "Courier",
                             NormalizedName = "COURIER"
                         });

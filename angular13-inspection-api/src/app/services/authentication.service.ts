@@ -23,6 +23,14 @@ export class AuthenticationService {
   public loginUser = (route: string, body: UserForAuthenticationDto) => {
     return this.http.post<AuthResponseDto>(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
   }
+
+  public getUser = (route:string) => {
+    var id = this.http.get<any>(this.createCompleteRoute(route, this.envUrl.urlAddress));
+    console.log(id);
+    return id;
+    
+  }
+
   
   getObject(item: string | null) {
     try {
@@ -52,12 +60,14 @@ export class AuthenticationService {
 		return false;
 	}
 
+
   public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
     this.authChangeSub.next(isAuthenticated);
   }
 
   public logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     this.sendAuthStateChangeNotification(false);
   }
 
