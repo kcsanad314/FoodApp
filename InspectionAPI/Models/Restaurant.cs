@@ -4,7 +4,6 @@ namespace InspectionAPI.Models
 {
     public class Restaurant
     {
-        [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "Kötelező a(z) {0} mezőt kitölteni!")]
         [MaxLength(255, ErrorMessage = "A(z) {0} maximum {1} karakter lehet.")]
@@ -22,7 +21,7 @@ namespace InspectionAPI.Models
         [MaxLength(1000, ErrorMessage = "A(z) {0} maximum {1} karakter lehet.")]
         [Display(Name = "Étterem neve", AutoGenerateFilter = false, AutoGenerateField = false, Order = 0)]
         public string Description { get; set; }
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         public User? User { get; set; }
         
         public List<Food>? Foods { get; set; }

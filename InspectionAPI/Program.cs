@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Owin.Security;
+using InspectionAPI.Services;
 
 var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -56,6 +57,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<JwtHandler>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddServices();
 //builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
 builder.Services.AddDbContext <DataContext>(options =>

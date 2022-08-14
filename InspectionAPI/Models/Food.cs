@@ -12,6 +12,6 @@ namespace InspectionAPI.Models
         public string Allergenes { get; set; }
         public double DiscountMultiplier { get; set; } = 1;
         public Restaurant? Restaurant { get; set; }
-        public int RestaurantId { get; set; }
+        public int? RestaurantId { get; set; }
     }
 }

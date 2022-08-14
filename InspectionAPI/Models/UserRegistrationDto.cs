@@ -7,8 +7,7 @@ namespace InspectionAPI.Models
 {
     public class UserRegistrationDto
     { 
-        [Key]
-        public int Id { get; set; }
+
         //[Required(ErrorMessage = "Kötelező a(z) {0} mezőt kitölteni!")]
         [MaxLength(255, ErrorMessage = "A(z) {0} maximum {1} karakter lehet.")]
         [Display(Name = "Felhasználó név", AutoGenerateFilter = false, AutoGenerateField = false, Order = 0)]

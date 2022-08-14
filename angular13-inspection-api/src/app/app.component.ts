@@ -12,6 +12,7 @@ export class AppComponent {
   title = 'angular13-inspection-api';
   isCollapsed: boolean = false;
   isUserAuthenticated: boolean;
+  userRole = localStorage.getItem("role");
   private authChangeSub = new Subject<boolean>()
   public authChanged = this.authChangeSub.asObservable();
 
@@ -21,8 +22,8 @@ export class AppComponent {
     this.authService.authChanged
     .subscribe(res => {
       this.isUserAuthenticated = res;
+      this.userRole = localStorage.getItem("role");
       this.isLogged();
-      console.log(this.isLogged());
     })
     
   }
@@ -54,7 +55,6 @@ export class AppComponent {
 
   isLogged() {
 		const token = this.getToken();
-    console.log(token);
 		if (token !== null && token !== false && token !== undefined) {
       this.isUserAuthenticated = true;
 			return true;

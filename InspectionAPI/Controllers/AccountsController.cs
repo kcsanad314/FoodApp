@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Web;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.Owin.Security;
+using InspectionAPI.Services;
 
 namespace InspectionAPI.Controllers
 {
@@ -23,14 +24,17 @@ namespace InspectionAPI.Controllers
         private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
         private readonly DataContext _db;
+        private readonly AccountsService accountsService;
 
-        public AccountsController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler, DataContext db, SignInManager<User> signInManager)
+        public AccountsController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler, DataContext db, SignInManager<User> signInManager, AccountsService accountsService)
         {
             _userManager = userManager;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
             _db = db;
             _signInManager = signInManager;
+            this.accountsService = accountsService;
+
         }
 
         [HttpPost("Registration")]
@@ -64,27 +68,33 @@ namespace InspectionAPI.Controllers
                 return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
             var signingCredentials = _jwtHandler.GetSigningCredentials();
             var claims = _jwtHandler.GetClaims(user);
-            claims.Add(new Claim(ClaimTypes.Name, userForAuthentication.Email));
+            claims.Add( new Claim ("role", user.UserRole.ToString()));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
             //await _userManager.CreateAsync(user, token);
             await _signInManager.SignInWithClaimsAsync(user,true, claims);
-            var calimidentity = new ClaimsIdentity(claims);
-            //_authenticationManager.SignIn(calimidentity);
+            var _claims = new Dictionary<string, string>();
+            foreach (var claim in claims)
+            {
+                _claims.Add(claim.Type, claim.Value);
+            }
             
-            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
+            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token, Claims = _claims, userId = user.Id });
         }
         //Accounts/GetUser
-        [HttpGet]
-        public  IActionResult GetUser()
+        [HttpGet("GetUser")]
+        public IActionResult GetUser()
         {
 
-            var user1 = this.User.Identity.Name;
-
-            var result = user1;
-
+            //var user1 = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var result = user1;
+            var result = accountsService.getUserId();
+            //System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+            //var id = _userManager.GetUserId(User);
 
             return Ok(result);
         }
+
     }
 }

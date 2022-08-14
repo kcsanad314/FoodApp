@@ -44,12 +44,15 @@ export class LoginComponent implements OnInit {
       email: login.username,
       password: login.password
     }
-
+    console.log("hi");
     this.authService.loginUser('api/accounts/login', userForAuth)
     .subscribe({
       next: (res:AuthResponseDto) => {
        localStorage.setItem("token", res.token);
-       //localStorage.setItem("role", );
+       localStorage.setItem("userId", res.userId);
+       for (let key in res.claims){
+        localStorage.setItem("role", res.claims["role"]);         
+       }
        this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
        this.router.navigate([this.returnUrl]);
     },

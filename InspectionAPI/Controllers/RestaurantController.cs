@@ -1,8 +1,11 @@
 ﻿using InspectionAPI.Data;
 using InspectionAPI.Models;
+using InspectionAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace InspectionAPI.Controllers
 {
@@ -11,9 +14,15 @@ namespace InspectionAPI.Controllers
     public class RestaurantController : ControllerBase
     {
         private readonly DataContext _db;
-        public RestaurantController(DataContext db)
+        private readonly UserManager<User> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly AccountsService accountsService;
+        public RestaurantController(DataContext db, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor, AccountsService accountsService)
         {
             _db = db;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+            this.accountsService = accountsService;
         }
 
         //Restaurant/GetAllRestaurants
@@ -35,6 +44,16 @@ namespace InspectionAPI.Controllers
             return Ok(result);
         }
 
+        //Restaurant/GetRestaurantById
+        [HttpGet]
+        [Route("{userId}")]
+        public IActionResult GetRestaurantByUserId(string userId)
+        {
+            //returns with a list of all the restaurants
+            var result = _db.Restaurants.Where(r => r.UserId == userId).FirstOrDefault();
+            return Ok(result);
+        }
+
         [HttpPost]
         //[Authorize(Roles = "Owner")]
         public IActionResult RegisterRestaurant([FromBody] Restaurant restaurant)
@@ -47,8 +66,7 @@ namespace InspectionAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        public IActionResult AddFood(Food food)
+        public IActionResult AddFood([FromBody] Food food)
         {
             /*var restaurant = _db.Restaurants.Where(r => r.Id == food.RestaurantId).FirstOrDefault();
             Food _food = new Food()

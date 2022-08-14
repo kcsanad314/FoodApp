@@ -6,21 +6,22 @@
       [attr.aria-expanded]="!isCollapsed" aria-controls="collapseNav">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="collapseNav" [collapse]="!isCollapsed" [isAnimated]="true">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <div class="collapse navbar-collapse" id="collapseNav">
+      <ul *ngIf="userRole == 'Owner'" class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/company/companies']" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: true}">Companies </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/restaurants">Restaurants</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/manage-restaurant">My Restaurant</a>
+          <a class="nav-link"[routerLink]="['/manage-restaurant']" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">My Restaurant</a>
         </li>
       </ul>
+      <ul *ngIf="userRole == 'Customer'" class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link"[routerLink]="['/restaurants']" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">Restaurants</a>
+        </li>
+      </ul>
+    </div>
       <form class="d-flex">
-        <ul *ngIf="!isLogged()" class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <ul  *ngIf="!isLogged()" class="navbar-nav mr-auto mt-2 mt-lg-0; reg">
           <li class="nav-item">
             <a class="nav-link"[routerLink]="['/authentication/login']" routerLinkActive="active" 
               [routerLinkActiveOptions]="{exact: true}">Login</a>
@@ -36,7 +37,7 @@
           </li>
         </ul>
       </form>
-    </div>
+
   </div>
 </nav>
 
